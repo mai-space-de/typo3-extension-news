@@ -1,0 +1,37 @@
+<f:layout name="Default" />
+
+<f:section name="Title">News / Aktuelles</f:section>
+
+<f:section name="Content">
+    <div class="news-list">
+        <h1 class="news-list__headline">News / Aktuelles</h1>
+
+        <nav class="news-list__filter">
+            <f:if condition="{categories}">
+                <ul class="news-list__categories">
+                    <li>
+                        <f:link.action action="list">All</f:link.action>
+                    </li>
+                    <f:for each="{categories}" as="category">
+                        <li class="{f:if(condition: '{activeCategory.uid} == {category.uid}', then: 'active')}">
+                            <f:link.action action="list" arguments="{category: category}">{category.title}</f:link.action>
+                        </li>
+                    </f:for>
+                </ul>
+            </f:if>
+        </nav>
+
+        <f:if condition="{news}">
+            <f:then>
+                <div class="news-list__items">
+                    <f:for each="{news}" as="newsArticle">
+                        <f:render partial="News/Item" section="newsItem" arguments="{newsArticle: newsArticle}" />
+                    </f:for>
+                </div>
+            </f:then>
+            <f:else>
+                <p class="news-list__empty">No news articles found.</p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>

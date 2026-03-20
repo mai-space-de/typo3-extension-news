@@ -1,0 +1,46 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Latest News</f:section>
+
+<f:section name="Content">
+    <div class="news-teaser">
+        <h2 class="news-teaser__headline">Latest News</h2>
+        <f:if condition="{news}">
+            <f:then>
+                <ul class="news-teaser__list">
+                    <f:for each="{news}" as="newsArticle">
+                        <li class="news-teaser__item">
+                            <f:if condition="{newsArticle.firstImage}">
+                                <div class="news-teaser__image">
+                                    <f:link.action action="show" arguments="{newsArticle: newsArticle}">
+                                        <f:image image="{newsArticle.firstImage}" alt="{newsArticle.title}" width="300c" height="200c" class="img-fluid" />
+                                    </f:link.action>
+                                </div>
+                            </f:if>
+                            <div class="news-teaser__content">
+                                <h3 class="news-teaser__title">
+                                    <f:link.action action="show" arguments="{newsArticle: newsArticle}">{newsArticle.title}</f:link.action>
+                                </h3>
+                                <f:if condition="{newsArticle.publishDate}">
+                                    <time class="news-teaser__date" datetime="{newsArticle.publishDate -> f:format.date(format: 'Y-m-d')}">
+                                        <f:format.date date="{newsArticle.publishDate}" format="d. F Y" />
+                                    </time>
+                                </f:if>
+                                <f:if condition="{newsArticle.teaser}">
+                                    <p class="news-teaser__text">{newsArticle.teaser}</p>
+                                </f:if>
+                                <f:link.action action="show" arguments="{newsArticle: newsArticle}" class="news-teaser__readmore">
+                                    Read more →
+                                </f:link.action>
+                            </div>
+                        </li>
+                    </f:for>
+                </ul>
+                <f:link.action action="list" class="news-teaser__all">View all news →</f:link.action>
+            </f:then>
+            <f:else>
+                <p class="news-teaser__empty">No news available.</p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>
