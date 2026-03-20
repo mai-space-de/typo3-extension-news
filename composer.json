@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MaiSpace\\MaiNews\\": "Classes/"
+            "Maispace\\MaiNews\\": "Classes/"
         }
     },
     "extra": {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MaiSpace\MaiNews\Domain\Repository;
+namespace Maispace\MaiNews\Domain\Repository;
 
-use MaiSpace\MaiNews\Domain\Model\NewsArticle;
-use MaiSpace\MaiNews\Domain\Model\NewsCategory;
+use Maispace\MaiNews\Domain\Model\NewsArticle;
+use Maispace\MaiNews\Domain\Model\NewsCategory;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;

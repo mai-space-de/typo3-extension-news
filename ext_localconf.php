@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use MaiSpace\MaiNews\Controller\NewsController;
-use MaiSpace\MaiNews\Controller\RssFeedController;
+use Maispace\MaiNews\Controller\NewsController;
+use Maispace\MaiNews\Controller\RssFeedController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') || die();

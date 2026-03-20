@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MaiSpace\MaiNews\Controller;
+namespace Maispace\MaiNews\Controller;
 
-use MaiSpace\MaiNews\Domain\Repository\NewsArticleRepository;
+use Maispace\MaiNews\Domain\Repository\NewsArticleRepository;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 

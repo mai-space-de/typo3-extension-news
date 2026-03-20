@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MaiSpace\MaiNews\Domain\Model;
+namespace Maispace\MaiNews\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 

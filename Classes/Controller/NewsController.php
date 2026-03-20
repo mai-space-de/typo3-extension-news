@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MaiSpace\MaiNews\Controller;
+namespace Maispace\MaiNews\Controller;
 
-use MaiSpace\MaiNews\Domain\Model\NewsArticle;
-use MaiSpace\MaiNews\Domain\Model\NewsCategory;
-use MaiSpace\MaiNews\Domain\Repository\NewsArticleRepository;
-use MaiSpace\MaiNews\Domain\Repository\NewsCategoryRepository;
+use Maispace\MaiNews\Domain\Model\NewsArticle;
+use Maispace\MaiNews\Domain\Model\NewsCategory;
+use Maispace\MaiNews\Domain\Repository\NewsArticleRepository;
+use Maispace\MaiNews\Domain\Repository\NewsCategoryRepository;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
