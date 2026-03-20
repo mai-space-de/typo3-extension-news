@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="EXT:mai_news/Resources/Private/Language/locallang_db.xlf">
+        <header/>
+        <body>
+            <!-- NewsArticle table -->
+            <trans-unit id="tx_mainews_domain_model_newsarticle">
+                <source>News Article</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.teaser">
+                <source>Teaser</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.body_text">
+                <source>Body</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.author">
+                <source>Author</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.publish_date">
+                <source>Publication Date</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.tags">
+                <source>Tags (comma-separated)</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.categories">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newsarticle.slug">
+                <source>URL Slug</source>
+            </trans-unit>
+
+            <!-- NewsCategory table -->
+            <trans-unit id="tx_mainews_domain_model_newscategory">
+                <source>News Category</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newscategory.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newscategory.description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_domain_model_newscategory.slug">
+                <source>URL Slug</source>
+            </trans-unit>
+
+            <!-- Plugin labels -->
+            <trans-unit id="plugin.mai_news_news.title">
+                <source>News: Overview &amp; Detail</source>
+            </trans-unit>
+            <trans-unit id="plugin.mai_news_news.description">
+                <source>Displays a news overview, detail page, teaser widget, and category list.</source>
+            </trans-unit>
+            <trans-unit id="plugin.mai_news_rssfeed.title">
+                <source>News: RSS Feed</source>
+            </trans-unit>
+            <trans-unit id="plugin.mai_news_rssfeed.description">
+                <source>Renders an RSS 2.0 feed of the latest news articles.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,26 @@
+plugin.tx_mainews {
+    persistence {
+        # cat=plugin.tx_mainews/persistence; type=int+; label=Storage PID for news records
+        storagePid = 0
+    }
+    settings {
+        # cat=plugin.tx_mainews/settings; type=int+; label=Number of articles on the list page
+        listLimit = 10
+        # cat=plugin.tx_mainews/settings; type=int+; label=Number of articles in the teaser widget
+        teaserLimit = 3
+        # cat=plugin.tx_mainews/settings; type=int+; label=Number of articles in the RSS feed
+        rssFeedLimit = 20
+        # cat=plugin.tx_mainews/settings; type=string; label=RSS feed title
+        rssFeedTitle = News
+        # cat=plugin.tx_mainews/settings; type=string; label=RSS feed description
+        rssFeedDescription = Latest news
+    }
+    view {
+        # cat=plugin.tx_mainews/view; type=string; label=Path to custom template root (optional override)
+        templateRootPath =
+        # cat=plugin.tx_mainews/view; type=string; label=Path to custom partial root (optional override)
+        partialRootPath =
+        # cat=plugin.tx_mainews/view; type=string; label=Path to custom layout root (optional override)
+        layoutRootPath =
+    }
+}

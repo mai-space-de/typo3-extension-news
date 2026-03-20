@@ -1,0 +1,55 @@
+<f:section name="newsItem">
+    <article class="news-item">
+        <f:if condition="{newsArticle.firstImage}">
+            <div class="news-item__image">
+                <f:image image="{newsArticle.firstImage}" alt="{newsArticle.title}" width="600c" height="400c" class="img-fluid" />
+            </div>
+        </f:if>
+
+        <div class="news-item__body">
+            <header class="news-item__header">
+                <h2 class="news-item__title">
+                    <f:link.action action="show" arguments="{newsArticle: newsArticle}">{newsArticle.title}</f:link.action>
+                </h2>
+                <div class="news-item__meta">
+                    <f:if condition="{newsArticle.publishDate}">
+                        <time class="news-item__date" datetime="{newsArticle.publishDate -> f:format.date(format: 'Y-m-d')}">
+                            <f:format.date date="{newsArticle.publishDate}" format="d. F Y" />
+                        </time>
+                    </f:if>
+                    <f:if condition="{newsArticle.author}">
+                        <span class="news-item__author">{newsArticle.author}</span>
+                    </f:if>
+                </div>
+            </header>
+
+            <f:if condition="{newsArticle.teaser}">
+                <p class="news-item__teaser">{newsArticle.teaser}</p>
+            </f:if>
+
+            <f:if condition="{newsArticle.categories}">
+                <ul class="news-item__categories">
+                    <f:for each="{newsArticle.categories}" as="category">
+                        <li>
+                            <f:link.action action="list" arguments="{category: category}">{category.title}</f:link.action>
+                        </li>
+                    </f:for>
+                </ul>
+            </f:if>
+
+            <f:if condition="{newsArticle.tagsArray}">
+                <ul class="news-item__tags">
+                    <f:for each="{newsArticle.tagsArray}" as="tag">
+                        <li>
+                            <f:link.action action="list" arguments="{tag: tag}">{tag}</f:link.action>
+                        </li>
+                    </f:for>
+                </ul>
+            </f:if>
+
+            <f:link.action action="show" arguments="{newsArticle: newsArticle}" class="news-item__readmore">
+                Read more
+            </f:link.action>
+        </div>
+    </article>
+</f:section>
