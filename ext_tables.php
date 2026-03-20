@@ -13,6 +13,7 @@ ExtensionUtility::registerPlugin(
     'EXT:mai_news/Resources/Public/Icons/Extension.svg',
     'news',
     'LLL:EXT:mai_news/Resources/Private/Language/locallang_db.xlf:plugin.mai_news_news.description',
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
 ExtensionUtility::registerPlugin(
@@ -22,4 +23,5 @@ ExtensionUtility::registerPlugin(
     'EXT:mai_news/Resources/Public/Icons/Extension.svg',
     'news',
     'LLL:EXT:mai_news/Resources/Private/Language/locallang_db.xlf:plugin.mai_news_rssfeed.description',
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );

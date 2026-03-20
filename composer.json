@@ -1,19 +1,23 @@
 {
-    "name": "maispace/mai-news",
-    "type": "typo3-cms-extension",
-    "description": "News / Aktuelles – TYPO3 extension with categories, tags, RSS feed, and FAL image support.",
-    "license": "GPL-2.0-or-later",
-    "require": {
-        "typo3/cms-core": "^12.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Maispace\\MaiNews\\": "Classes/"
-        }
-    },
-    "extra": {
-        "typo3/cms": {
-            "extension-key": "mai_news"
-        }
+  "name": "maispace/mai-news",
+  "type": "typo3-cms-extension",
+  "description": "News / Aktuelles – TYPO3 extension with categories, tags, RSS feed, and FAL image support.",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": "^8.2",
+    "typo3/cms-core": "^13.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Maispace\\MaiNews\\": "Classes/"
     }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "mai_news"
+    },
+    "branch-alias": {
+      "dev-main": "13.0.x-dev"
+    }
+  }
 }

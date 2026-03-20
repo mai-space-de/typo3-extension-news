@@ -18,7 +18,8 @@ ExtensionUtility::configurePlugin(
     // Non-cacheable actions
     [
         NewsController::class => '',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 // RSS Feed plugin
@@ -30,5 +31,6 @@ ExtensionUtility::configurePlugin(
     ],
     [
         RssFeedController::class => '',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
