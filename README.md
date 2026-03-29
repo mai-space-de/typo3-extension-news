@@ -5,7 +5,7 @@
 
 News / Aktuelles extension with categories, tags, RSS feed, and FAL image support. Categories use TYPO3 `sys_category`, sharing the same tree as `mai_gallery`, `mai_faq`, and `mai_timeline`.
 
-**Requires:** TYPO3 13.4 LTS / 14.0 · PHP 8.2+
+**Requires:** TYPO3 13.4 LTS / 14.1 · PHP 8.2+
 
 ---
 
