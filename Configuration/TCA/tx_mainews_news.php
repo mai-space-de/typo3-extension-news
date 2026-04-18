@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\CategoryConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\DatetimeConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\FileConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SelectMultipleConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\TextConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
 
@@ -17,58 +23,47 @@ return (new Table($lang('table.tx_mainews_news')))
     ->addColumn(
         'title',
         $lang('tx_mainews_news.title'),
-        ['type' => 'input', 'size' => 50, 'max' => 255, 'eval' => 'trim,required']
+        (new InputConfig())->setSize(50)->setMax(255)->setEval('trim,required')
     )
     ->addColumn(
         'teaser',
         $lang('tx_mainews_news.teaser'),
-        ['type' => 'text', 'rows' => 4, 'cols' => 50, 'eval' => 'trim']
+        (new TextConfig())->setRows(4)->setCols(50)->setEval('trim')
     )
     ->addColumn(
         'body',
         $lang('tx_mainews_news.body'),
-        [
-            'type' => 'text',
-            'rows' => 15,
-            'cols' => 50,
-            'enableRichtext' => true,
-            'richtextConfiguration' => 'default',
-        ]
+        (new TextConfig())->setRows(15)->setCols(50)->enableRte()->setRichtextConfiguration('default')
     )
     ->addColumn(
         'date',
         $lang('tx_mainews_news.date'),
-        ['type' => 'datetime', 'format' => 'date', 'eval' => 'required']
+        (new DatetimeConfig())->setFormat('date')->setRequired()
     )
     ->addColumn(
         'images',
         $lang('tx_mainews_news.images'),
-        [
-            'type' => 'file',
-            'allowed' => 'common-image-types',
-            'appearance' => [
+        (new FileConfig())
+            ->setAllowed('common-image-types')
+            ->setAppearance([
                 'createNewRelationLinkTitle' => $lang('tx_mainews_news.images.addFile'),
                 'enabledControls' => ['info' => true, 'dragdrop' => true, 'sort' => true, 'hide' => true, 'delete' => true],
-            ],
-        ]
+            ])
     )
     ->addColumn(
         'categories',
         $lang('tx_mainews_news.categories'),
-        ['type' => 'category']
+        new CategoryConfig()
     )
     ->addColumn(
         'tags',
         $lang('tx_mainews_news.tags'),
-        [
-            'type' => 'select',
-            'renderType' => 'selectMultipleSideBySide',
-            'foreign_table' => 'tx_mainews_tag',
-            'foreign_table_where' => 'ORDER BY tx_mainews_tag.name',
-            'MM' => 'tx_mainews_news_tag_mm',
-            'size' => 7,
-            'minitems' => 0,
-        ]
+        (new SelectMultipleConfig())
+            ->setForeignTable('tx_mainews_tag')
+            ->setForeignTableWhere('ORDER BY tx_mainews_tag.name')
+            ->setMm('tx_mainews_news_tag_mm')
+            ->setSize(7)
+            ->setMinItems(0)
     )
     ->addTypeShowItem(
         '0',

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
 
@@ -16,7 +17,7 @@ return (new Table($lang('table.tx_mainews_tag')))
     ->addColumn(
         'name',
         $lang('tx_mainews_tag.name'),
-        ['type' => 'input', 'size' => 30, 'max' => 100, 'eval' => 'trim,required,unique']
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required,unique')
     )
     ->addTypeShowItem(
         '0',
