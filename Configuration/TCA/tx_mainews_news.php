@@ -16,14 +16,13 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
 return (new Table($lang('table.tx_mainews_news')))
     ->setDefaultConfig()
     ->setLabel('title')
-    ->setSearchFields('title, teaser, body')
     ->setIconFile('EXT:mai_news/Resources/Public/Icons/tx_mainews_news.svg')
     ->setDefaultSorting('ORDER BY date DESC')
     ->setThumbnailField('images')
     ->addColumn(
         'title',
         $lang('tx_mainews_news.title'),
-        (new InputConfig())->setSize(50)->setMax(255)->setEval('trim,required')
+        (new InputConfig())->setSize(50)->setMax(255)->setEval('trim')->setRequired()
     )
     ->addColumn(
         'teaser',

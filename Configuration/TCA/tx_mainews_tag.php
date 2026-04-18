@@ -11,13 +11,12 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
 return (new Table($lang('table.tx_mainews_tag')))
     ->setDefaultConfig()
     ->setLabel('name')
-    ->setSearchFields('name')
     ->setIconFile('EXT:mai_news/Resources/Public/Icons/tx_mainews_tag.svg')
     ->setSortingField()
     ->addColumn(
         'name',
         $lang('tx_mainews_tag.name'),
-        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,required,unique')
+        (new InputConfig())->setSize(30)->setMax(100)->setEval('trim,unique')->setRequired()
     )
     ->addTypeShowItem(
         '0',
