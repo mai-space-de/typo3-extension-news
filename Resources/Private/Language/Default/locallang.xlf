@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2024-01-01T00:00:00Z" product-name="mai_news">
+        <header/>
+        <body>
+            <trans-unit id="news.readMore">
+                <source>Read more</source>
+            </trans-unit>
+            <trans-unit id="news.backToList">
+                <source>Back to list</source>
+            </trans-unit>
+            <trans-unit id="news.noResults">
+                <source>No news found.</source>
+            </trans-unit>
+            <trans-unit id="news.postedOn">
+                <source>Posted on</source>
+            </trans-unit>
+            <trans-unit id="news.categories">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="news.tags">
+                <source>Tags</source>
+            </trans-unit>
+            <trans-unit id="pagination.previous">
+                <source>Previous</source>
+            </trans-unit>
+            <trans-unit id="pagination.next">
+                <source>Next</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

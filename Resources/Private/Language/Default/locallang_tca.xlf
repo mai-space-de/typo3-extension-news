@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2024-01-01T00:00:00Z" product-name="mai_news">
+        <header/>
+        <body>
+            <trans-unit id="table.tx_mainews_news">
+                <source>News</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.teaser">
+                <source>Teaser</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.body">
+                <source>Body</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.date">
+                <source>Date</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.images">
+                <source>Images</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.categories">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.tags">
+                <source>Tags</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.slug">
+                <source>Slug</source>
+            </trans-unit>
+            <trans-unit id="table.tx_mainews_tag">
+                <source>News Tag</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_tag.name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="tab.language">
+                <source>Language</source>
+            </trans-unit>
+            <trans-unit id="tab.access">
+                <source>Access</source>
+            </trans-unit>
+            <trans-unit id="ctype.news_list">
+                <source>News List</source>
+            </trans-unit>
+            <trans-unit id="ctype.news_rss">
+                <source>News RSS Feed</source>
+            </trans-unit>
+            <trans-unit id="plugin.list.title">
+                <source>News: List</source>
+            </trans-unit>
+            <trans-unit id="plugin.rss.title">
+                <source>News: RSS Feed</source>
+            </trans-unit>
+            <trans-unit id="flexform.sheet.general">
+                <source>General</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.pages">
+                <source>Storage Pages</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.categoryUid">
+                <source>Category Filter</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.tagUid">
+                <source>Tag Filter</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.limit">
+                <source>Limit</source>
+            </trans-unit>
+            <trans-unit id="flexform.field.detailPid">
+                <source>Detail Page</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

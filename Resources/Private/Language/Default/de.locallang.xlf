@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2024-01-01T00:00:00Z" product-name="mai_news">
+        <header/>
+        <body>
+            <trans-unit id="news.readMore">
+                <source>Read more</source>
+                <target>Weiterlesen</target>
+            </trans-unit>
+            <trans-unit id="news.backToList">
+                <source>Back to list</source>
+                <target>Zurück zur Übersicht</target>
+            </trans-unit>
+            <trans-unit id="news.noResults">
+                <source>No news found.</source>
+                <target>Keine Neuigkeiten gefunden.</target>
+            </trans-unit>
+            <trans-unit id="news.postedOn">
+                <source>Posted on</source>
+                <target>Veröffentlicht am</target>
+            </trans-unit>
+            <trans-unit id="news.categories">
+                <source>Categories</source>
+                <target>Kategorien</target>
+            </trans-unit>
+            <trans-unit id="news.tags">
+                <source>Tags</source>
+                <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="pagination.previous">
+                <source>Previous</source>
+                <target>Vorherige</target>
+            </trans-unit>
+            <trans-unit id="pagination.next">
+                <source>Next</source>
+                <target>Nächste</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

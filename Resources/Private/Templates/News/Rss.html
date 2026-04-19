@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+>
+<f:section name="main">
+<rss version="2.0">
+    <channel>
+        <title><f:translate key="news.rss.title" extensionName="mai_news" default="News"/></title>
+        <link><f:uri.page absolute="1"/></link>
+        <description><f:translate key="news.rss.description" extensionName="mai_news" default="Latest news"/></description>
+        <language>{settings.language -> f:if(condition: settings.language, else: 'de')}</language>
+        <f:for each="{news}" as="newsItem">
+            <item>
+                <title>{newsItem.title}</title>
+                <link><f:uri.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" absolute="1"/></link>
+                <description>{newsItem.teaser}</description>
+                <f:if condition="{newsItem.date}">
+                    <pubDate><f:format.date date="{newsItem.date}" format="r"/></pubDate>
+                </f:if>
+                <guid isPermaLink="true"><f:uri.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" absolute="1"/></guid>
+            </item>
+        </f:for>
+    </channel>
+</rss>
+</f:section>
+</html>

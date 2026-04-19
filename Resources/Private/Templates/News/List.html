@@ -1,0 +1,67 @@
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+>
+<f:section name="main">
+    <div class="mai-news-list">
+        <f:if condition="{paginator.paginatedItems}">
+            <f:then>
+                <div class="mai-news-list__items">
+                    <f:for each="{paginator.paginatedItems}" as="newsItem">
+                        <article class="mai-news-list__item">
+                            <f:if condition="{newsItem.images}">
+                                <div class="mai-news-list__image">
+                                    <f:for each="{newsItem.images}" as="image" iteration="imageIteration">
+                                        <f:if condition="{imageIteration.isFirst}">
+                                            <f:image image="{image}" alt="{newsItem.title}" class="mai-news-list__img"/>
+                                        </f:if>
+                                    </f:for>
+                                </div>
+                            </f:if>
+                            <div class="mai-news-list__content">
+                                <h2 class="mai-news-list__title">
+                                    <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}">
+                                        {newsItem.title}
+                                    </f:link.action>
+                                </h2>
+                                <f:if condition="{newsItem.date}">
+                                    <time class="mai-news-list__date" datetime="{newsItem.date -> f:format.date(format: 'Y-m-d')}">
+                                        <f:translate key="news.postedOn" extensionName="mai_news"/>
+                                        <f:format.date date="{newsItem.date}" format="d.m.Y"/>
+                                    </time>
+                                </f:if>
+                                <f:if condition="{newsItem.teaser}">
+                                    <p class="mai-news-list__teaser">{newsItem.teaser}</p>
+                                </f:if>
+                                <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" class="mai-news-list__read-more">
+                                    <f:translate key="news.readMore" extensionName="mai_news"/>
+                                </f:link.action>
+                            </div>
+                        </article>
+                    </f:for>
+                </div>
+
+                <f:if condition="{pagination.numberOfPages} > 1">
+                    <nav class="mai-news-list__pagination" aria-label="pagination">
+                        <f:if condition="{pagination.previousPageNumber}">
+                            <f:link.action action="list" arguments="{currentPage: pagination.previousPageNumber}" class="mai-news-list__pagination-prev">
+                                <f:translate key="pagination.previous" extensionName="mai_news"/>
+                            </f:link.action>
+                        </f:if>
+                        <f:if condition="{pagination.nextPageNumber}">
+                            <f:link.action action="list" arguments="{currentPage: pagination.nextPageNumber}" class="mai-news-list__pagination-next">
+                                <f:translate key="pagination.next" extensionName="mai_news"/>
+                            </f:link.action>
+                        </f:if>
+                    </nav>
+                </f:if>
+            </f:then>
+            <f:else>
+                <p class="mai-news-list__empty">
+                    <f:translate key="news.noResults" extensionName="mai_news"/>
+                </p>
+            </f:else>
+        </f:if>
+    </div>
+</f:section>
+</html>

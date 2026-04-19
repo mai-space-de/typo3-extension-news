@@ -1,0 +1,47 @@
+plugin.tx_mainews_list {
+    view {
+        templateRootPaths {
+            0 = EXT:mai_news/Resources/Private/Templates/
+            10 = {$plugin.tx_mainews_list.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:mai_news/Resources/Private/Partials/
+            10 = {$plugin.tx_mainews_list.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:mai_news/Resources/Private/Layouts/
+            10 = {$plugin.tx_mainews_list.view.layoutRootPath}
+        }
+    }
+    persistence {
+        storagePid = {$plugin.tx_mainews_list.persistence.storagePid}
+    }
+    settings {
+        limit = 10
+        itemsPerPage = 10
+        detailPid =
+    }
+}
+
+plugin.tx_mainews_rss {
+    view {
+        templateRootPaths {
+            0 = EXT:mai_news/Resources/Private/Templates/
+            10 = {$plugin.tx_mainews_rss.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:mai_news/Resources/Private/Partials/
+            10 = {$plugin.tx_mainews_rss.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:mai_news/Resources/Private/Layouts/
+            10 = {$plugin.tx_mainews_rss.view.layoutRootPath}
+        }
+    }
+    persistence {
+        storagePid = {$plugin.tx_mainews_rss.persistence.storagePid}
+    }
+    settings {
+        limit = 20
+    }
+}

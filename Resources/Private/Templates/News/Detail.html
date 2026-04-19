@@ -1,0 +1,61 @@
+<html
+    data-namespace-typo3-fluid="true"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+>
+<f:section name="main">
+    <article class="mai-news-detail">
+        <h1 class="mai-news-detail__title">{news.title}</h1>
+
+        <f:if condition="{news.date}">
+            <time class="mai-news-detail__date" datetime="{news.date -> f:format.date(format: 'Y-m-d')}">
+                <f:translate key="news.postedOn" extensionName="mai_news"/>
+                <f:format.date date="{news.date}" format="d.m.Y"/>
+            </time>
+        </f:if>
+
+        <f:if condition="{news.images}">
+            <div class="mai-news-detail__images">
+                <f:for each="{news.images}" as="image">
+                    <f:image image="{image}" alt="{news.title}" class="mai-news-detail__img"/>
+                </f:for>
+            </div>
+        </f:if>
+
+        <f:if condition="{news.teaser}">
+            <p class="mai-news-detail__teaser">{news.teaser}</p>
+        </f:if>
+
+        <f:if condition="{news.body}">
+            <div class="mai-news-detail__body">
+                <f:format.html>{news.body}</f:format.html>
+            </div>
+        </f:if>
+
+        <f:if condition="{news.categories}">
+            <div class="mai-news-detail__categories">
+                <span class="mai-news-detail__categories-label">
+                    <f:translate key="news.categories" extensionName="mai_news"/>:
+                </span>
+                <f:for each="{news.categories}" as="category">
+                    <span class="mai-news-detail__category">{category.title}</span>
+                </f:for>
+            </div>
+        </f:if>
+
+        <f:if condition="{news.tags}">
+            <div class="mai-news-detail__tags">
+                <span class="mai-news-detail__tags-label">
+                    <f:translate key="news.tags" extensionName="mai_news"/>:
+                </span>
+                <f:for each="{news.tags}" as="tag">
+                    <span class="mai-news-detail__tag">{tag.name}</span>
+                </f:for>
+            </div>
+        </f:if>
+
+        <f:link.action action="list" class="mai-news-detail__back">
+            <f:translate key="news.backToList" extensionName="mai_news"/>
+        </f:link.action>
+    </article>
+</f:section>
+</html>
