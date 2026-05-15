@@ -13,7 +13,7 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
     'MaiNews',
     'List',
     $lang('plugin.list.title'),
-    'ext-maispace-mai_news',
+    'mai-content',
     'maispace_feature',
 );
 
@@ -21,11 +21,11 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
     'MaiNews',
     'Rss',
     $lang('plugin.rss.title'),
-    'ext-maispace-mai_news',
+    'mai-content',
     'maispace_feature',
 );
 
-(new CType('maispace_news_list', $lang('ctype.news_list'), 'ext-maispace-mai_news'))
+(new CType('maispace_news_list', $lang('ctype.news_list'), 'mai-content'))
     ->addDefaultHeaderPalette()
     ->addCustomFields('pi_flexform')
     ->addDefaultLanguageTab()
@@ -33,7 +33,7 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
     ->setGroup('maispace_feature')
     ->register();
 
-(new CType('maispace_news_rss', $lang('ctype.news_rss'), 'ext-maispace-mai_news'))
+(new CType('maispace_news_rss', $lang('ctype.news_rss'), 'mai-content'))
     ->addDefaultHeaderPalette()
     ->addCustomFields('pi_flexform')
     ->addDefaultLanguageTab()
