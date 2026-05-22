@@ -19,7 +19,7 @@ class NewsRepository extends Repository
     {
         $query = $this->createQuery();
         $query->matching(
-            $query->contains('categories', $categoryUid)
+            $query->contains('categories', $categoryUid),
         );
 
         return $query->execute();
@@ -29,7 +29,7 @@ class NewsRepository extends Repository
     {
         $query = $this->createQuery();
         $query->matching(
-            $query->contains('tags', $tagUid)
+            $query->contains('tags', $tagUid),
         );
 
         return $query->execute();
@@ -48,7 +48,7 @@ class NewsRepository extends Repository
         $query = $this->createQuery();
         $query->getQuerySettings()->setStoragePageIds($pageUids);
         $query->matching(
-            $query->contains('categories', $categoryUid)
+            $query->contains('categories', $categoryUid),
         );
 
         return $query->execute();
@@ -59,7 +59,7 @@ class NewsRepository extends Repository
         $query = $this->createQuery();
         $query->getQuerySettings()->setStoragePageIds($pageUids);
         $query->matching(
-            $query->contains('tags', $tagUid)
+            $query->contains('tags', $tagUid),
         );
 
         return $query->execute();

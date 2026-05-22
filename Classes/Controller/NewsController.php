@@ -11,8 +11,6 @@ use Maispace\MaiBase\Controller\Traits\PageRendererTrait;
 use Maispace\MaiBase\Controller\Traits\PaginationTrait;
 use Maispace\MaiNews\Domain\Repository\NewsRepository;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 
@@ -25,9 +23,7 @@ class NewsController extends AbstractActionController
 
     public function __construct(
         private readonly NewsRepository $newsRepository,
-        private readonly ConnectionPool $connectionPool,
-    ) {
-    }
+    ) {}
 
     public function injectPageRenderer(PageRenderer $pageRenderer): void
     {
@@ -43,8 +39,8 @@ class NewsController extends AbstractActionController
     {
         $settings = $this->getSettings();
         $pageUids = $this->resolveStoragePageUids();
-        $categoryUid = (int)($settings['categoryUid'] ?? 0);
-        $tagUid = (int)($settings['tagUid'] ?? 0);
+        $categoryUid = (int) ($settings['categoryUid'] ?? 0);
+        $tagUid = (int) ($settings['tagUid'] ?? 0);
 
         if ($pageUids !== [] && $categoryUid > 0) {
             $news = $this->newsRepository->findFromPagesByCategoryUid($pageUids, $categoryUid);
@@ -87,7 +83,7 @@ class NewsController extends AbstractActionController
     public function rssAction(): ResponseInterface
     {
         $settings = $this->getSettings();
-        $limit = (int)($settings['limit'] ?? 20);
+        $limit = (int) ($settings['limit'] ?? 20);
         $pageUids = $this->resolveStoragePageUids();
 
         if ($pageUids !== []) {
@@ -113,36 +109,8 @@ class NewsController extends AbstractActionController
         }
 
         return array_filter(
-            array_map('intval', explode(',', (string)$pages)),
+            array_map('intval', explode(',', (string) $pages)),
             static fn(int $uid): bool => $uid > 0,
         );
-    }
-
-    private function resolveCategories(array $settings): array
-    {
-        $categoryUids = $settings['categoryUids'] ?? '';
-        if (empty($categoryUids)) {
-            return [];
-        }
-
-        $uids = array_filter(
-            array_map('intval', explode(',', (string)$categoryUids)),
-            static fn(int $uid): bool => $uid > 0,
-        );
-
-        $categories = [];
-        foreach ($uids as $uid) {
-            $qb = $this->connectionPool->getQueryBuilderForTable('sys_category');
-            $row = $qb->select('uid', 'title')
-                ->from('sys_category')
-                ->where($qb->expr()->eq('uid', $qb->createNamedParameter($uid, Connection::PARAM_INT)))
-                ->executeQuery()
-                ->fetchAssociative();
-            if ($row !== false) {
-                $categories[] = $row;
-            }
-        }
-
-        return $categories;
     }
 }
