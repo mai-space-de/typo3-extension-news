@@ -27,7 +27,7 @@ return (new Table($lang('table.tx_mainews_news')))
     ->addColumn(
         'teaser',
         $lang('tx_mainews_news.teaser'),
-        (new TextConfig())->setRows(4)->setCols(50)->setEval('trim')
+        (new TextConfig())->setRows(4)->setCols(50)->setEval('trim')->enableRte()->setRichtextConfiguration('default')
     )
     ->addColumn(
         'body',
