@@ -24,5 +24,8 @@ defined('TYPO3') or die();
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] =
-    \Maispace\MaiNews\Hook\NewsCacheInvalidationHook::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['mai_news']
+    = \Maispace\MaiNews\Hook\NewsCacheInvalidationHook::class;
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['mai_news']
+    = \Maispace\MaiNews\Hook\NewsCacheInvalidationHook::class;
