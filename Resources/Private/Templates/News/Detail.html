@@ -1,9 +1,9 @@
-<html
-    data-namespace-typo3-fluid="true"
+<f:layout name="Default"/>
+
+<f:section name="main"
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
     xmlns:seo="http://typo3.org/ns/Maispace/MaiSeo/ViewHelpers"
->
-<f:section name="main">
+    data-namespace-typo3-fluid="true">
     <seo:structuredData />
     <article class="mai-news-detail">
         <h1 class="mai-news-detail__title">{news.title}</h1>
@@ -60,4 +60,3 @@
         </f:link.action>
     </article>
 </f:section>
-</html>

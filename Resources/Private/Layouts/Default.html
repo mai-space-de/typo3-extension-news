@@ -1,0 +1,10 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true"
+      lang="{siteLanguage.hreflang}">
+<f:comment>
+    Base layout for news plugin.
+    - Uses siteLanguage.hreflang (BCP47 format: de-DE, en-GB, etc.) for html lang attribute.
+    - Renders the main content section from the calling template.
+</f:comment>
+<f:render section="main" optional="true"/>
+</html>
