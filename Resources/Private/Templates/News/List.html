@@ -18,17 +18,18 @@
                             </f:if>
                             <div class="mai-news-list__card-body">
                                 <div class="mai-news-list__card-meta">
+                                    <f:if condition="{newsItem.date}">
+                                        <time class="mai-news-list__date-badge" datetime="{newsItem.date -> f:format.date(format: 'Y-m-d')}">
+                                            <span class="mai-news-list__date-day"><f:format.date date="{newsItem.date}" format="j"/></span>
+                                            <span class="mai-news-list__date-month"><f:format.date date="{newsItem.date}" format="M"/></span>
+                                        </time>
+                                    </f:if>
                                     <f:if condition="{newsItem.categories}">
                                         <f:for each="{newsItem.categories}" as="category" iteration="catIteration">
                                             <f:if condition="{catIteration.isFirst}">
                                                 <span class="mai-news-list__tag">{category.title}</span>
                                             </f:if>
                                         </f:for>
-                                    </f:if>
-                                    <f:if condition="{newsItem.date}">
-                                        <time class="mai-news-list__date" datetime="{newsItem.date -> f:format.date(format: 'Y-m-d')}">
-                                            <f:format.date date="{newsItem.date}" format="d.m.Y"/>
-                                        </time>
                                     </f:if>
                                 </div>
                                 <h3 class="mai-news-list__title">

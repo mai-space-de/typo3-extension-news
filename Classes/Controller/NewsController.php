@@ -56,7 +56,7 @@ class NewsController extends AbstractActionController
             $news = $this->newsRepository->findAll();
         }
 
-        $pagination = $this->paginateQueryResult($news);
+        $pagination = $this->paginateQueryResult($news, (int) ($settings['limit'] ?? 10));
 
         $this->view->assignMultiple([
             'news' => $news,
