@@ -31,8 +31,9 @@
                                 <f:if condition="{newsItem.teaser}">
                                     <p class="mai-news-list__teaser">{newsItem.teaser}</p>
                                 </f:if>
-                                <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" class="mai-news-list__read-more">
-                                    <f:translate key="news.readMore" extensionName="mai_news"/>
+                                <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" class="mai-news-list__read-more"
+                                                aria-label="{f:translate(key: 'news.readMore', extensionName: 'mai_news')} – {newsItem.title}">
+                                    <span aria-hidden="true"><f:translate key="news.readMore" extensionName="mai_news"/></span>
                                 </f:link.action>
                             </div>
                         </article>
