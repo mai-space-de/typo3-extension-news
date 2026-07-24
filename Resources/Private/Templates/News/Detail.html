@@ -3,14 +3,24 @@
 <f:section name="main">
     <seo:structuredData xmlns:seo="http://typo3.org/ns/Maispace/MaiSeo/ViewHelpers"/>
     <article class="mai-news-detail">
-        <h1 class="mai-news-detail__title">{news.title}</h1>
+        <div class="mai-news-detail__header">
+            <f:if condition="{news.categories}">
+                <div class="mai-news-detail__tags-row">
+                    <f:for each="{news.categories}" as="category">
+                        <span class="mai-news-detail__tag">{category.title}</span>
+                    </f:for>
+                </div>
+            </f:if>
 
-        <f:if condition="{news.date}">
-            <time class="mai-news-detail__date" datetime="{news.date -> f:format.date(format: 'Y-m-d')}">
-                <f:translate key="news.postedOn" extensionName="mai_news"/>
-                <f:format.date date="{news.date}" format="d.m.Y"/>
-            </time>
-        </f:if>
+            <h1 class="mai-news-detail__title">{news.title}</h1>
+
+            <f:if condition="{news.date}">
+                <time class="mai-news-detail__date" datetime="{news.date -> f:format.date(format: 'Y-m-d')}">
+                    <f:translate key="news.postedOn" extensionName="mai_news"/>
+                    <f:format.date date="{news.date}" format="d.m.Y"/>
+                </time>
+            </f:if>
+        </div>
 
         <f:if condition="{news.images}">
             <div class="mai-news-detail__images">
@@ -30,17 +40,6 @@
             </div>
         </f:if>
 
-        <f:if condition="{news.categories}">
-            <div class="mai-news-detail__categories">
-                <span class="mai-news-detail__categories-label">
-                    <f:translate key="news.categories" extensionName="mai_news"/>:
-                </span>
-                <f:for each="{news.categories}" as="category">
-                    <span class="mai-news-detail__category">{category.title}</span>
-                </f:for>
-            </div>
-        </f:if>
-
         <f:if condition="{news.tags}">
             <div class="mai-news-detail__tags">
                 <span class="mai-news-detail__tags-label">
@@ -53,7 +52,7 @@
         </f:if>
 
         <f:link.action action="list" class="mai-news-detail__back">
-            <f:translate key="news.backToList" extensionName="mai_news"/>
+            ← <f:translate key="news.backToList" extensionName="mai_news"/>
         </f:link.action>
     </article>
 </f:section>
