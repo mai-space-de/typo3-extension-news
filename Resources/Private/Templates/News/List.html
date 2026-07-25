@@ -38,7 +38,9 @@
                                     </f:link.action>
                                 </h3>
                                 <f:if condition="{newsItem.teaser}">
-                                    <p class="mai-news-list__teaser">{newsItem.teaser}</p>
+                                    <div class="mai-news-list__teaser">
+                                        <f:format.html>{newsItem.teaser}</f:format.html>
+                                    </div>
                                 </f:if>
                                 <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" class="mai-news-list__read-more"
                                                 aria-label="{f:translate(key: 'news.readMore', extensionName: 'mai_news')} – {newsItem.title}">

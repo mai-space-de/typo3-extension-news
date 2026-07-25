@@ -9,7 +9,7 @@
             <item>
                 <title>{newsItem.title}</title>
                 <link><f:uri.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" absolute="1"/></link>
-                <description>{newsItem.teaser}</description>
+                <description>{newsItem.teaser -> f:format.stripTags()}</description>
                 <f:if condition="{newsItem.date}">
                     <pubDate><f:format.date date="{newsItem.date}" format="r"/></pubDate>
                 </f:if>

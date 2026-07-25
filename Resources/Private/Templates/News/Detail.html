@@ -36,7 +36,9 @@
         </f:if>
 
         <f:if condition="{news.teaser}">
-            <p class="mai-news-detail__teaser">{news.teaser}</p>
+            <div class="mai-news-detail__teaser">
+                <f:format.html>{news.teaser}</f:format.html>
+            </div>
         </f:if>
 
         <f:if condition="{news.body}">

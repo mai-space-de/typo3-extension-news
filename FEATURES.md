@@ -8,7 +8,7 @@ Table `tx_mainews_news`. All fields below are part of the domain model
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `title` | varchar(255) | yes | Plain text, trimmed. Used as the article heading. |
-| `teaser` | text | no | Short summary. Rendered in the list view and as the RSS `<description>`. |
+| `teaser` | text | no | Short summary (RTE). Rendered with `f:format.html` in list/detail; RSS uses stripped plain text. |
 | `body` | mediumtext | no | Rich-text body. Rendered with `f:format.html` (RTE-processed HTML). |
 | `date` | int(11) UNIX ts | yes | Publication date. Default sort order: `date DESC`. |
 | `images` | FAL relation | no | Multiple images. List shows only the first; detail shows all. |
@@ -135,7 +135,7 @@ Each `<item>` contains:
 | --- | --- |
 | `<title>` | `{newsItem.title}` |
 | `<link>` | `f:uri.action action="detail" pageUid="{settings.detailPid}"` (absolute) |
-| `<description>` | `{newsItem.teaser}` (plain text) |
+| `<description>` | `{newsItem.teaser -> f:format.stripTags()}` (plain text) |
 | `<pubDate>` | `{newsItem.date}` formatted as RFC 2822 (`f:format.date format="r"`) — only rendered if `newsItem.date` is set |
 | `<guid isPermaLink="true">` | Same absolute URL as `<link>` |
 
