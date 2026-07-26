@@ -14,7 +14,7 @@ Table `tx_mainews_news`. All fields below are part of the domain model
 | `images` | FAL relation | no | Multiple images. List shows only the first; detail shows all. |
 | `categories` | sys_category MM | no | Zero or more `sys_category` records. |
 | `tags` | tx_mainews_tag MM | no | Zero or more free-form tags (separate table). |
-| `slug` | varchar(2048) | no | Auto-generated URL segment. Not yet exposed in controller routes. |
+| `slug` | varchar(2048) | no | Auto-generated URL segment from `title` (TCA slug field). Used by the site route enhancer `MaiNewsDetail` (`PersistedAliasMapper`) for pretty detail URLs. |
 
 ---
 
@@ -291,3 +291,5 @@ No TYPO3 system columns — pure MM join table.
 - **Detail page is configured per plugin.** The `settings.detailPid` FlexForm field
   must point to the page hosting `maispace_news_list`; without it, all detail and RSS
   item links are broken.
+- **Pretty detail URLs.** Site route enhancer `MaiNewsDetail` maps `/{news}` to
+  `News::detail` via `PersistedAliasMapper` on `tx_mainews_news.slug`.

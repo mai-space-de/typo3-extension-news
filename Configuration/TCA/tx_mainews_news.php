@@ -7,6 +7,7 @@ use Maispace\MaiBase\TableConfigurationArray\FieldConfig\DatetimeConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\FileConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\InputConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SelectMultipleConfig;
+use Maispace\MaiBase\TableConfigurationArray\FieldConfig\SlugConfig;
 use Maispace\MaiBase\TableConfigurationArray\FieldConfig\TextConfig;
 use Maispace\MaiBase\TableConfigurationArray\Helper;
 use Maispace\MaiBase\TableConfigurationArray\Table;
@@ -23,6 +24,19 @@ return (new Table($lang('table.tx_mainews_news')))
         'title',
         $lang('tx_mainews_news.title'),
         (new InputConfig())->setSize(50)->setMax(255)->setEval('trim')->setRequired()
+    )
+    ->addColumn(
+        'slug',
+        $lang('tx_mainews_news.slug'),
+        (new SlugConfig())
+            ->setEval('uniqueInSite')
+            ->setFallbackCharacter('-')
+            ->setPrependSlash(false)
+            ->setGeneratorOptions([
+                'fields' => ['title'],
+                'fieldSeparator' => '-',
+                'replacements' => ['/' => ''],
+            ])
     )
     ->addColumn(
         'teaser',
@@ -66,7 +80,7 @@ return (new Table($lang('table.tx_mainews_news')))
     )
     ->addTypeShowItem(
         '0',
-        'title, date, teaser, body, images,
+        'title, slug, date, teaser, body, images,
         --div--;' . $lang('tab.relations') . ', categories, tags,
         --div--;' . $lang('tab.language') . ', --palette--;;language,
         --div--;' . $lang('tab.access') . ', --palette--;;hidden, --palette--;;access'
