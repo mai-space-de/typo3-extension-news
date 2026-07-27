@@ -14,7 +14,7 @@ Table `tx_mainews_news`. All fields below are part of the domain model
 | `images` | FAL relation | no | Multiple images. List shows only the first; detail shows all. |
 | `categories` | sys_category MM | no | Zero or more `sys_category` records. |
 | `tags` | tx_mainews_tag MM | no | Zero or more free-form tags (separate table). |
-| `slug` | varchar(2048) | no | Auto-generated URL segment from `title` (TCA slug field). Used by the site route enhancer `MaiNewsDetail` (`PersistedAliasMapper`) for pretty detail URLs. |
+| `slug` | varchar(2048) | no | Auto-generated URL segment from `title` (TCA slug field). Used by the site route enhancer `MaiNews` (`PersistedAliasMapper`) for pretty detail URLs. |
 
 ---
 
@@ -66,6 +66,10 @@ Each has its own FlexForm (see section 7).
 ### 5.1 `listAction` — News list with pagination
 
 Template: `News/List.html`
+
+The list and detail templates wrap output in a `mai_turbo` Turbo Frame (`id="mai-news-list"`, `wrapResponse="true"`) so
+pagination and list ↔ detail navigation update only that region without a full page reload.
+Detail links and the back link stay inside the frame (no `data-turbo-frame="_top"`).
 
 | Template variable | Value |
 | --- | --- |
@@ -291,5 +295,5 @@ No TYPO3 system columns — pure MM join table.
 - **Detail page is configured per plugin.** The `settings.detailPid` FlexForm field
   must point to the page hosting `maispace_news_list`; without it, all detail and RSS
   item links are broken.
-- **Pretty detail URLs.** Site route enhancer `MaiNewsDetail` maps `/{news}` to
-  `News::detail` via `PersistedAliasMapper` on `tx_mainews_news.slug`.
+- **Pretty URLs.** Site route enhancer `MaiNews` maps `/{news}` to `News::detail` and
+  `/page-{currentPage}` to `News::list` via `PersistedAliasMapper` on `tx_mainews_news.slug`.

@@ -1,76 +1,95 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:maiTurbo="http://typo3.org/ns/Maispace/MaiTurbo/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
 <f:layout name="Default"/>
 
 <f:section name="main">
-    <div class="mai-news-list">
-        <f:if condition="{paginator.paginatedItems}">
-            <f:then>
-                <div class="mai-news-list__grid">
-                    <f:for each="{paginator.paginatedItems}" as="newsItem">
-                        <article class="mai-news-list__card">
-                            <f:if condition="{newsItem.images}">
-                                <div class="mai-news-list__card-image">
-                                    <f:for each="{newsItem.images}" as="image" iteration="imageIteration">
-                                        <f:if condition="{imageIteration.isFirst}">
-                                            <f:image image="{image}" alt="{newsItem.title}" class="mai-news-list__img"/>
-                                        </f:if>
-                                    </f:for>
-                                </div>
-                            </f:if>
-                            <div class="mai-news-list__card-body">
-                                <div class="mai-news-list__card-meta">
-                                    <f:if condition="{newsItem.date}">
-                                        <time class="mai-news-list__date-badge" datetime="{newsItem.date -> f:format.date(format: 'Y-m-d')}">
-                                            <span class="mai-news-list__date-day"><f:format.date date="{newsItem.date}" format="j"/></span>
-                                            <span class="mai-news-list__date-month"><f:format.date date="{newsItem.date}" format="M"/></span>
-                                        </time>
+    <maiTurbo:context.plugin>
+        <maiTurbo:frame id="mai-news-list" wrapResponse="true">
+            <div class="mai-news-list">
+                <f:if condition="{paginator.paginatedItems}">
+                    <f:then>
+                        <div class="mai-news-list__grid">
+                            <f:for each="{paginator.paginatedItems}" as="newsItem">
+                                <article class="mai-news-list__card">
+                                    <f:if condition="{newsItem.images}">
+                                        <div class="mai-news-list__card-image">
+                                            <f:for each="{newsItem.images}" as="image" iteration="imageIteration">
+                                                <f:if condition="{imageIteration.isFirst}">
+                                                    <f:image image="{image}" alt="{newsItem.title}" class="mai-news-list__img"/>
+                                                </f:if>
+                                            </f:for>
+                                        </div>
                                     </f:if>
-                                    <f:if condition="{newsItem.categories}">
-                                        <f:for each="{newsItem.categories}" as="category" iteration="catIteration">
-                                            <f:if condition="{catIteration.isFirst}">
-                                                <span class="mai-news-list__tag">{category.title}</span>
+                                    <div class="mai-news-list__card-body">
+                                        <div class="mai-news-list__card-meta">
+                                            <f:if condition="{newsItem.date}">
+                                                <time class="mai-news-list__date-badge" datetime="{newsItem.date -> f:format.date(format: 'Y-m-d')}">
+                                                    <span class="mai-news-list__date-day"><f:format.date date="{newsItem.date}" format="j"/></span>
+                                                    <span class="mai-news-list__date-month"><f:format.date date="{newsItem.date}" format="M"/></span>
+                                                </time>
                                             </f:if>
-                                        </f:for>
-                                    </f:if>
-                                </div>
-                                <h3 class="mai-news-list__title">
-                                    <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}">
-                                        {newsItem.title}
-                                    </f:link.action>
-                                </h3>
-                                <f:if condition="{newsItem.teaser}">
-                                    <div class="mai-news-list__teaser">
-                                        <f:format.html>{newsItem.teaser}</f:format.html>
+                                            <f:if condition="{newsItem.categories}">
+                                                <f:for each="{newsItem.categories}" as="category" iteration="catIteration">
+                                                    <f:if condition="{catIteration.isFirst}">
+                                                        <span class="mai-news-list__tag">{category.title}</span>
+                                                    </f:if>
+                                                </f:for>
+                                            </f:if>
+                                        </div>
+                                        <h3 class="mai-news-list__title">
+                                            <f:link.action
+                                                action="detail"
+                                                arguments="{news: newsItem}"
+                                                pageUid="{settings.detailPid}"
+                                            >
+                                                {newsItem.title}
+                                            </f:link.action>
+                                        </h3>
+                                        <f:if condition="{newsItem.teaser}">
+                                            <div class="mai-news-list__teaser">
+                                                <f:format.html>{newsItem.teaser}</f:format.html>
+                                            </div>
+                                        </f:if>
+                                        <f:link.action
+                                            action="detail"
+                                            arguments="{news: newsItem}"
+                                            pageUid="{settings.detailPid}"
+                                            class="mai-news-list__read-more"
+                                            aria-label="{f:translate(key: 'news.readMore', extensionName: 'mai_news')} – {newsItem.title}"
+                                        >
+                                            <span aria-hidden="true"><f:translate key="news.readMore" extensionName="mai_news"/> →</span>
+                                        </f:link.action>
                                     </div>
-                                </f:if>
-                                <f:link.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" class="mai-news-list__read-more"
-                                                aria-label="{f:translate(key: 'news.readMore', extensionName: 'mai_news')} – {newsItem.title}">
-                                    <span aria-hidden="true"><f:translate key="news.readMore" extensionName="mai_news"/> →</span>
-                                </f:link.action>
-                            </div>
-                        </article>
-                    </f:for>
-                </div>
+                                </article>
+                            </f:for>
+                        </div>
 
-                <f:if condition="{pagination.numberOfPages} > 1">
-                    <nav class="mai-news-list__pagination" aria-label="pagination">
-                        <f:if condition="{pagination.previousPageNumber}">
-                            <f:link.action action="list" arguments="{currentPage: pagination.previousPageNumber}" class="mai-news-list__pagination-prev">
-                                <f:translate key="pagination.previous" extensionName="mai_news"/>
-                            </f:link.action>
+                        <f:if condition="{pagination.numberOfPages} > 1">
+                            <nav class="mai-news-list__pagination" aria-label="pagination">
+                                <f:if condition="{pagination.previousPageNumber}">
+                                    <f:link.action action="list" arguments="{currentPage: pagination.previousPageNumber}" class="mai-news-list__pagination-prev">
+                                        <f:translate key="pagination.previous" extensionName="mai_news"/>
+                                    </f:link.action>
+                                </f:if>
+                                <f:if condition="{pagination.nextPageNumber}">
+                                    <f:link.action action="list" arguments="{currentPage: pagination.nextPageNumber}" class="mai-news-list__pagination-next">
+                                        <f:translate key="pagination.next" extensionName="mai_news"/>
+                                    </f:link.action>
+                                </f:if>
+                            </nav>
                         </f:if>
-                        <f:if condition="{pagination.nextPageNumber}">
-                            <f:link.action action="list" arguments="{currentPage: pagination.nextPageNumber}" class="mai-news-list__pagination-next">
-                                <f:translate key="pagination.next" extensionName="mai_news"/>
-                            </f:link.action>
-                        </f:if>
-                    </nav>
+                    </f:then>
+                    <f:else>
+                        <p class="mai-news-list__empty">
+                            <f:translate key="news.noResults" extensionName="mai_news"/>
+                        </p>
+                    </f:else>
                 </f:if>
-            </f:then>
-            <f:else>
-                <p class="mai-news-list__empty">
-                    <f:translate key="news.noResults" extensionName="mai_news"/>
-                </p>
-            </f:else>
-        </f:if>
-    </div>
+            </div>
+        </maiTurbo:frame>
+    </maiTurbo:context.plugin>
 </f:section>
+
+</html>

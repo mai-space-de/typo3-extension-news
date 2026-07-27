@@ -13,6 +13,7 @@
         "php": "^8.2",
         "maispace/mai-base": "^14.0",
         "maispace/mai-search": "^14.0",
+        "maispace/mai-turbo": "^14.0",
         "typo3/cms-core": "^14.1",
         "typo3/cms-extbase": "^14.1",
         "typo3/cms-fluid": "^14.1"

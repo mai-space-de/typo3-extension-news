@@ -14,6 +14,14 @@ defined('TYPO3') or die();
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
+// Allow list pagination and detail URLs without cHash (enforceValidation is on).
+$GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'] = array_values(array_unique(array_merge(
+    (array) ($GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'] ?? []),
+    [
+        '^tx_mainews_list',
+    ],
+)));
+
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'MaiNews',
     'Rss',

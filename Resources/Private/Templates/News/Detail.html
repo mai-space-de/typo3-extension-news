@@ -1,13 +1,16 @@
 <html
     data-namespace-typo3-fluid="true"
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:maiTurbo="http://typo3.org/ns/Maispace/MaiTurbo/ViewHelpers"
     xmlns:seo="http://typo3.org/ns/Maispace/MaiSeo/ViewHelpers"
 >
 <f:layout name="Default"/>
 
 <f:section name="main">
-    <seo:structuredData />
-    <article class="mai-news-detail">
+    <maiTurbo:context.plugin>
+        <maiTurbo:frame id="mai-news-list" wrapResponse="true">
+            <seo:structuredData />
+            <article class="mai-news-detail">
         <div class="mai-news-detail__header">
             <f:if condition="{news.categories}">
                 <div class="mai-news-detail__tags-row">
@@ -61,6 +64,8 @@
         <f:link.action action="list" class="mai-news-detail__back">
             ← <f:translate key="news.backToList" extensionName="mai_news"/>
         </f:link.action>
-    </article>
+            </article>
+        </maiTurbo:frame>
+    </maiTurbo:context.plugin>
 </f:section>
 </html>
