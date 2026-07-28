@@ -53,8 +53,8 @@ Two CTypes are registered:
 
 | CType | Plugin identifier | Action | Backend group |
 | --- | --- | --- | --- |
-| `maispace_news_list` | `tx_maijobs_list` | `list`, `detail` | `maispace_feature` |
-| `maispace_news_rss` | `tx_mainews_rss` | `rss` | `maispace_feature` |
+| `mainews_list` | `tx_maijobs_list` | `list`, `detail` | `maispace_feature` |
+| `mainews_rss` | `tx_mainews_rss` | `rss` | `maispace_feature` |
 
 Both CTypes include a default header palette, a language tab, and an access tab.
 Each has its own FlexForm (see section 7).
@@ -101,7 +101,7 @@ Template: `News/Detail.html`
 | `news` | Single `News` entity resolved from `news` GET/POST argument |
 | `settings` | Raw FlexForm settings array |
 
-The detail action is registered on the **list plugin** (`maispace_news_list`), not a
+The detail action is registered on the **list plugin** (`mainews_list`), not a
 separate plugin. It is reached via `f:link.action` with `action="detail"` and
 `pageUid="{settings.detailPid}"` pointing to the detail page.
 
@@ -111,7 +111,7 @@ A "Back to list" link uses `f:link.action action="list"` without a `pageUid`.
 
 ## 6. RSS 2.0 Feed
 
-The RSS feed is implemented as a dedicated content element (`maispace_news_rss`) with
+The RSS feed is implemented as a dedicated content element (`mainews_rss`) with
 its own Fluid template and an explicit `Content-Type` response header.
 
 ### 6.1 HTTP response
@@ -157,11 +157,11 @@ Results always sorted `date DESC`.
 
 To wire up the RSS feed:
 
-1. Add the `maispace_news_rss` content element to a dedicated page (e.g. `/news.rss`).
+1. Add the `mainews_rss` content element to a dedicated page (e.g. `/news.rss`).
 2. Set the page's `HTTP Response Header` TypoScript or rely on the automatic
    `application/rss+xml` response header returned by `rssAction()`.
 3. Set `settings.detailPid` in the FlexForm to the page that hosts the
-   `maispace_news_list` plugin — this builds the absolute `<link>` / `<guid>` URLs.
+   `mainews_list` plugin — this builds the absolute `<link>` / `<guid>` URLs.
 4. Optionally set `settings.pages` to restrict items to specific storage folders.
 5. Optionally set `settings.limit` (default 20) to control the item count.
 
@@ -169,7 +169,7 @@ To wire up the RSS feed:
 
 ## 7. FlexForm Configuration
 
-### News List plugin (`maispace_news_list`)
+### News List plugin (`mainews_list`)
 
 | Field | Settings key | Type | Default | Notes |
 | --- | --- | --- | --- | --- |
@@ -179,7 +179,7 @@ To wire up the RSS feed:
 | Items per page | `settings.limit` | number | 10 | Maximum items per pagination page |
 | Detail page | `settings.detailPid` | group (pages, 1 max) | — | Page UID for `detailAction` links |
 
-### RSS plugin (`maispace_news_rss`)
+### RSS plugin (`mainews_rss`)
 
 | Field | Settings key | Type | Default | Notes |
 | --- | --- | --- | --- | --- |
@@ -290,10 +290,10 @@ No TYPO3 system columns — pure MM join table.
 - **Tags are extension-local.** `tx_mainews_tag` is not shared; do not reference it
   from other extensions.
 - **RSS is content-element-based.** There is no standalone route or middleware for the
-  feed. Place the `maispace_news_rss` content element on a dedicated page and set the
+  feed. Place the `mainews_rss` content element on a dedicated page and set the
   desired URL via site routing.
 - **Detail page is configured per plugin.** The `settings.detailPid` FlexForm field
-  must point to the page hosting `maispace_news_list`; without it, all detail and RSS
+  must point to the page hosting `mainews_list`; without it, all detail and RSS
   item links are broken.
 - **Pretty URLs.** Site route enhancer `MaiNews` maps `/{news}` to `News::detail` and
   `/page-{currentPage}` to `News::list` via `PersistedAliasMapper` on `tx_mainews_news.slug`.
