@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages"
+          date="2025-01-01T00:00:00Z" product-name="mai_news">
+        <header/>
+        <body>
+            <trans-unit id="table.tx_mainews_news">
+                <source>News</source>
+                <target>News</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.teaser">
+                <source>Teaser</source>
+                <target>Teaser</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.body">
+                <source>Body</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.date">
+                <source>Date</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.images">
+                <source>Images</source>
+                <target>Bilder</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.categories">
+                <source>Categories</source>
+                <target>Kategorien</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.tags">
+                <source>Tags</source>
+                <target>Schlagwörter</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.slug">
+                <source>Slug</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="table.tx_mainews_tag">
+                <source>News Tag</source>
+                <target>News-Schlagwort</target>
+            </trans-unit>
+            <trans-unit id="tx_mainews_tag.name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tab.language">
+                <source>Language</source>
+                <target>Sprache</target>
+            </trans-unit>
+            <trans-unit id="tab.access">
+                <source>Access</source>
+                <target>Zugriff</target>
+            </trans-unit>
+            <trans-unit id="ctype.news_list">
+                <source>News List</source>
+                <target>News-Liste</target>
+            </trans-unit>
+            <trans-unit id="ctype.news_rss">
+                <source>News RSS Feed</source>
+                <target>News-RSS-Feed</target>
+            </trans-unit>
+            <trans-unit id="plugin.list.title">
+                <source>News: List</source>
+                <target>News: Liste</target>
+            </trans-unit>
+            <trans-unit id="plugin.rss.title">
+                <source>News: RSS Feed</source>
+                <target>News: RSS-Feed</target>
+            </trans-unit>
+            <trans-unit id="flexform.sheet.general">
+                <source>General</source>
+                <target>Allgemein</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.pages">
+                <source>Storage Pages</source>
+                <target>Speicherseiten</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.categoryUid">
+                <source>Category Filter</source>
+                <target>Kategoriefilter</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.tagUid">
+                <source>Tag Filter</source>
+                <target>Schlagwortfilter</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.limit">
+                <source>Limit</source>
+                <target>Anzahl begrenzen</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.detailPid">
+                <source>Detail Page</source>
+                <target>Detailseite</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
