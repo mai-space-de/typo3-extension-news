@@ -40,13 +40,13 @@
 
         <f:if condition="{news.teaser}">
             <div class="mai-news-detail__teaser">
-                <f:format.html>{news.teaser}</f:format.html>
+                <f:render.text record="{news}" field="teaser" />
             </div>
         </f:if>
 
         <f:if condition="{news.body}">
             <div class="mai-news-detail__body">
-                <f:format.html>{news.body}</f:format.html>
+                <f:render.text record="{news}" field="body" />
             </div>
         </f:if>
 

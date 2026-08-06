@@ -49,7 +49,7 @@
                                         </h3>
                                         <f:if condition="{newsItem.teaser}">
                                             <div class="mai-news-list__teaser">
-                                                <f:format.html>{newsItem.teaser}</f:format.html>
+                                                <f:render.text record="{newsItem}" field="teaser" />
                                             </div>
                                         </f:if>
                                         <f:link.action
