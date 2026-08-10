@@ -78,6 +78,18 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
         return $record->getTeaser() . "\n" . strip_tags($record->getBody());
     }
 
+    /**
+     * Extbase plugin namespace for the MaiNews `List` plugin
+     * (ext_localconf.php: ExtensionUtility::configurePlugin('MaiNews', 'List', ...)),
+     * matching the `MaiNews` route enhancer in config/sites/{site}/config.yaml
+     * (routePath '/{news}' → News::detail, `news` aspect mapped via
+     * PersistedAliasMapper on tx_mainews_news.slug). A bare `?slug=...` query
+     * parameter — what this used to pass — isn't inside that namespace at all,
+     * so no route enhancer ever recognises it; SiteRouter falls back to the
+     * plugin's container page URL with the query string tacked on verbatim.
+     */
+    private const string PLUGIN_NAMESPACE = 'tx_mainews_list';
+
     protected function buildUrl(object $record): string
     {
         if (!$record instanceof News) {
@@ -85,10 +97,17 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
         }
 
         try {
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId((int) $record->getPid());
+            $storagePid = (int) $record->getPid();
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($storagePid);
             $uri = $site->getRouter()->generateUri(
-                (int) $record->getPid(),
-                ['slug' => $record->getSlug()],
+                $this->resolvePluginTargetPageId($site, 'MaiNews', 'List', $storagePid),
+                [
+                    self::PLUGIN_NAMESPACE => [
+                        'controller' => 'News',
+                        'action' => 'detail',
+                        'news' => $record->getUid(),
+                    ],
+                ],
             );
 
             return (string) $uri;
