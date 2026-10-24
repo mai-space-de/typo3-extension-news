@@ -15,11 +15,17 @@ class News extends AbstractEntity
 
     protected string $teaser = '';
 
+    /**
+     * Legacy RTE body — content lives in tt_content on News pages after cutover.
+     * Kept for unit tests / indexer BC during parallelbetrieb.
+     */
     protected string $body = '';
 
     protected ?\DateTime $date = null;
 
     protected string $slug = '';
+
+    protected int $doktype = 0;
 
     /**
      * @var ObjectStorage<FileReference>
@@ -98,6 +104,16 @@ class News extends AbstractEntity
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getDoktype(): int
+    {
+        return $this->doktype;
+    }
+
+    public function setDoktype(int $doktype): void
+    {
+        $this->doktype = $doktype;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Maispace\MaiNews\Tests\Unit\Hook;
 
+use Maispace\MaiBase\Backend\CustomPageModule\DoktypeIds;
 use Maispace\MaiNews\Hook\NewsCacheInvalidationHook;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,7 +25,22 @@ final class NewsCacheInvalidationHookTest extends TestCase
     }
 
     #[Test]
-    public function newsRecordUpdateFlushesExtbaseCacheTagsTest(): void
+    public function newsPageUpdateFlushesExtbaseCacheTagsTest(): void
+    {
+        $this->cacheService->expects(self::once())->method('clearCacheForRecord')->with('pages', 42);
+        $this->cacheService->expects(self::once())->method('clearCachesOfRegisteredPageIds');
+
+        $this->makeHook()->processDatamap_afterDatabaseOperations(
+            'update',
+            'pages',
+            42,
+            ['doktype' => DoktypeIds::NEWS, 'tx_mainews_teaser' => 'Updated'],
+            $this->dataHandler,
+        );
+    }
+
+    #[Test]
+    public function legacyNewsRecordUpdateStillFlushesCache(): void
     {
         $this->cacheService->expects(self::once())->method('clearCacheForRecord')->with('tx_mainews_news', 42);
         $this->cacheService->expects(self::once())->method('clearCachesOfRegisteredPageIds');
@@ -39,16 +55,16 @@ final class NewsCacheInvalidationHookTest extends TestCase
     }
 
     #[Test]
-    public function unrelatedTableFlushesNoCacheTest(): void
+    public function nonNewsPageUpdateDoesNotFlush(): void
     {
         $this->cacheService->expects(self::never())->method('clearCacheForRecord');
         $this->cacheService->expects(self::never())->method('clearCachesOfRegisteredPageIds');
 
         $this->makeHook()->processDatamap_afterDatabaseOperations(
             'update',
-            'tx_maifaq_faq',
+            'pages',
             1,
-            [],
+            ['title' => 'Home'],
             $this->dataHandler,
         );
     }

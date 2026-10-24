@@ -11,7 +11,8 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
 return (new Table($lang('table.tx_mainews_tag')))
     ->setDefaultConfig()
     ->setLabel('name')
-    ->setIconFile('EXT:mai_base/Resources/Public/Icons/generic_table.svg')
+    ->setIconFile('EXT:mai_base/Resources/Public/Icons/all-icons/interface-bookmark-tag--tags-bookmark-favorite--Streamline-Core.svg')
+
     ->setSortingField()
     ->addColumn(
         'name',

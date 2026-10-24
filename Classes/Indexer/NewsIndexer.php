@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Maispace\MaiNews\Indexer;
 
+use Maispace\MaiBase\Backend\CustomPageModule\DoktypeIds;
+use Maispace\MaiNews\Domain\Model\News;
 use Maispace\MaiSearch\Domain\Dto\SearchResult;
 use Maispace\MaiSearch\Domain\Model\IndexingContext;
 use Maispace\MaiSearch\Domain\Service\SearchResultFormatterInterface;
 use Maispace\MaiSearch\Indexer\AbstractIndexer;
-use Maispace\MaiNews\Domain\Model\News;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
+/**
+ * Indexes News doktype pages. Emits SiteRouter page URLs as the public URL.
+ * Accepts both Extbase News models (full reindex) and stdClass page rows (queue).
+ */
 class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterface
 {
-    private const TABLE_NAME = 'tx_mainews_news';
+    private const TABLE_NAME = 'pages';
 
     public function getType(): string
     {
@@ -43,17 +48,22 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
 
     public function indexRecord(object $record, IndexingContext $context): void
     {
-        if (!$record instanceof News) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
+            return;
+        }
+
+        if ((int) ($page->doktype ?? 0) !== DoktypeIds::NEWS) {
             return;
         }
 
         $document = $this->createDocument(
             type: $this->getType(),
-            uid: (int) $record->getUid(),
-            title: $record->getTitle(),
-            content: $this->buildContent($record),
-            url: $this->buildUrl($record),
-            crdate: $record->getDate() ?? new \DateTime(),
+            uid: (int) $page->uid,
+            title: (string) ($page->title ?? ''),
+            content: $this->buildContent($page),
+            url: $this->buildUrl($page),
+            crdate: $this->resolveDate($page),
             boost: $this->getBoost($this->getType()),
         );
 
@@ -71,48 +81,42 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
 
     protected function buildContent(object $record): string
     {
-        if (!$record instanceof News) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
             return '';
         }
 
-        return $record->getTeaser() . "\n" . strip_tags($record->getBody());
+        $parts = array_filter([
+            (string) ($page->tx_mainews_teaser ?? $page->teaser ?? ''),
+            strip_tags((string) ($page->body ?? '')),
+            $this->fetchPageContentText((int) $page->uid),
+        ]);
+
+        return implode("\n", $parts);
     }
 
     /**
-     * Extbase plugin namespace for the MaiNews `List` plugin
-     * (ext_localconf.php: ExtensionUtility::configurePlugin('MaiNews', 'List', ...)),
-     * matching the `MaiNews` route enhancer in config/sites/{site}/config.yaml
-     * (routePath '/{news}' → News::detail, `news` aspect mapped via
-     * PersistedAliasMapper on tx_mainews_news.slug). A bare `?slug=...` query
-     * parameter — what this used to pass — isn't inside that namespace at all,
-     * so no route enhancer ever recognises it; SiteRouter falls back to the
-     * plugin's container page URL with the query string tacked on verbatim.
+     * Public URL = SiteRouter page UID (News page is the detail target).
      */
-    private const string PLUGIN_NAMESPACE = 'tx_mainews_list';
-
     protected function buildUrl(object $record): string
     {
-        if (!$record instanceof News) {
+        $page = $this->normalizePageRecord($record);
+        if ($page === null) {
+            return '';
+        }
+
+        $pageUid = (int) $page->uid;
+        if ($pageUid <= 0) {
             return '';
         }
 
         try {
-            $storagePid = (int) $record->getPid();
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($storagePid);
-            $uri = $site->getRouter()->generateUri(
-                $this->resolvePluginTargetPageId($site, 'MaiNews', 'List', $storagePid),
-                [
-                    self::PLUGIN_NAMESPACE => [
-                        'controller' => 'News',
-                        'action' => 'detail',
-                        'news' => $record->getUid(),
-                    ],
-                ],
-            );
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
+            $uri = $site->getRouter()->generateUri($pageUid);
 
             return (string) $uri;
-        } catch (\Exception) {
-            return $record->getSlug();
+        } catch (\Throwable) {
+            return (string) ($page->slug ?? '');
         }
     }
 
@@ -121,10 +125,22 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE_NAME);
 
-        $queryBuilder->select('*')->from(self::TABLE_NAME);
+        $queryBuilder
+            ->select('*')
+            ->from(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'doktype',
+                    $queryBuilder->createNamedParameter(DoktypeIds::NEWS, Connection::PARAM_INT),
+                ),
+                $queryBuilder->expr()->eq(
+                    'deleted',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+            );
 
         if ($context->languageUid !== null) {
-            $queryBuilder->where(
+            $queryBuilder->andWhere(
                 $queryBuilder->expr()->eq(
                     'sys_language_uid',
                     $queryBuilder->createNamedParameter($context->languageUid, Connection::PARAM_INT),
@@ -147,6 +163,40 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
         return $dataMapper->map(News::class, $rows);
     }
 
+    /**
+     * @return iterable<int>
+     */
+    public function getRecordUidsForReindex(IndexingContext $context): iterable
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable(self::TABLE_NAME);
+
+        $queryBuilder
+            ->select('uid')
+            ->from(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'doktype',
+                    $queryBuilder->createNamedParameter(DoktypeIds::NEWS, Connection::PARAM_INT),
+                ),
+                $queryBuilder->expr()->eq(
+                    'deleted',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+            );
+
+        if ($context->languageUid !== null) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->eq(
+                    'sys_language_uid',
+                    $queryBuilder->createNamedParameter($context->languageUid, Connection::PARAM_INT),
+                ),
+            );
+        }
+
+        return array_map('intval', $queryBuilder->executeQuery()->fetchFirstColumn());
+    }
+
     public function formatResult(array $solrDoc): SearchResult
     {
         return new SearchResult(
@@ -163,6 +213,80 @@ class NewsIndexer extends AbstractIndexer implements SearchResultFormatterInterf
     public function getIcon(string $type): string
     {
         return 'content-news';
+    }
+
+    private function normalizePageRecord(object $record): ?\stdClass
+    {
+        if ($record instanceof News) {
+            $obj = new \stdClass();
+            $obj->uid = (int) $record->getUid();
+            $obj->doktype = $record->getDoktype();
+            $obj->title = $record->getTitle();
+            $obj->slug = $record->getSlug();
+            $obj->tx_mainews_teaser = $record->getTeaser();
+            $obj->teaser = $record->getTeaser();
+            $obj->body = $record->getBody();
+            $obj->tx_mainews_date = $record->getDate()?->getTimestamp() ?? 0;
+
+            return $obj;
+        }
+
+        if ($record instanceof \stdClass && isset($record->uid)) {
+            return $record;
+        }
+
+        return null;
+    }
+
+    private function resolveDate(\stdClass $page): \DateTime
+    {
+        $timestamp = (int) ($page->tx_mainews_date ?? $page->tstamp ?? $page->crdate ?? 0);
+        if ($timestamp > 0) {
+            $dt = new \DateTime();
+            $dt->setTimestamp($timestamp);
+
+            return $dt;
+        }
+
+        return new \DateTime();
+    }
+
+    private function fetchPageContentText(int $pageUid): string
+    {
+        if ($pageUid <= 0) {
+            return '';
+        }
+
+        try {
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+                ->getQueryBuilderForTable('tt_content');
+
+            $rows = $queryBuilder
+                ->select('header', 'bodytext')
+                ->from('tt_content')
+                ->where(
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pageUid, Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                    $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
+                )
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (\Throwable) {
+            return '';
+        }
+
+        $parts = [];
+        foreach ($rows as $row) {
+            if (!empty($row['header'])) {
+                $parts[] = strip_tags((string) $row['header']);
+            }
+
+            if (!empty($row['bodytext'])) {
+                $parts[] = strip_tags((string) $row['bodytext']);
+            }
+        }
+
+        return implode(' ', $parts);
     }
 
     private function buildSnippet(array $solrDoc): string

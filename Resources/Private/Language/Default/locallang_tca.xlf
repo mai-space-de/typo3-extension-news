@@ -30,6 +30,18 @@
             <trans-unit id="tx_mainews_news.slug">
                 <source>Slug</source>
             </trans-unit>
+            <trans-unit id="tx_mainews_news.images.addFile">
+                <source>Add image</source>
+            </trans-unit>
+            <trans-unit id="tx_mainews_news.legacy_news_uid">
+                <source>Legacy news UID</source>
+            </trans-unit>
+            <trans-unit id="tab.news">
+                <source>News</source>
+            </trans-unit>
+            <trans-unit id="palette.newsMeta">
+                <source>Date &amp; images</source>
+            </trans-unit>
             <trans-unit id="table.tx_mainews_tag">
                 <source>News Tag</source>
             </trans-unit>
@@ -58,7 +70,7 @@
                 <source>General</source>
             </trans-unit>
             <trans-unit id="flexform.field.pages">
-                <source>Storage Pages</source>
+                <source>Parent pages (optional filter)</source>
             </trans-unit>
             <trans-unit id="flexform.field.categoryUid">
                 <source>Category Filter</source>

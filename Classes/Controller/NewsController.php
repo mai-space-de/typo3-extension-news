@@ -6,7 +6,6 @@ namespace Maispace\MaiNews\Controller;
 
 use Maispace\MaiBase\Controller\AbstractActionController;
 use Maispace\MaiBase\Controller\Traits\AppendDataToPluginVariablesTrait;
-use Maispace\MaiBase\Controller\Traits\DetailActionTrait;
 use Maispace\MaiBase\Controller\Traits\PageRendererTrait;
 use Maispace\MaiBase\Controller\Traits\PaginationTrait;
 use Maispace\MaiNews\Domain\Repository\NewsRepository;
@@ -14,12 +13,14 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 
+/**
+ * List/RSS over News doktype pages. Detail is the page itself (no Extbase detail).
+ */
 class NewsController extends AbstractActionController
 {
     use AppendDataToPluginVariablesTrait;
     use PageRendererTrait;
     use PaginationTrait;
-    use DetailActionTrait;
 
     public function __construct(
         private readonly NewsRepository $newsRepository,
@@ -38,7 +39,7 @@ class NewsController extends AbstractActionController
     public function listAction(): ResponseInterface
     {
         $settings = $this->getSettings();
-        $pageUids = $this->resolveStoragePageUids();
+        $pageUids = $this->resolveParentPageUids();
         $categoryUid = (int) ($settings['categoryUid'] ?? 0);
         $tagUid = (int) ($settings['tagUid'] ?? 0);
 
@@ -68,23 +69,11 @@ class NewsController extends AbstractActionController
         return $this->htmlResponse();
     }
 
-    public function detailAction(): ResponseInterface
-    {
-        $news = $this->resolveDetailOrNotFound($this->newsRepository, 'news');
-
-        $this->view->assignMultiple([
-            'news' => $news,
-            'settings' => $this->getSettings(),
-        ]);
-
-        return $this->htmlResponse();
-    }
-
     public function rssAction(): ResponseInterface
     {
         $settings = $this->getSettings();
         $limit = (int) ($settings['limit'] ?? 20);
-        $pageUids = $this->resolveStoragePageUids();
+        $pageUids = $this->resolveParentPageUids();
 
         if ($pageUids !== []) {
             $news = $this->newsRepository->findFromPages($pageUids);
@@ -101,16 +90,19 @@ class NewsController extends AbstractActionController
             ->withHeader('Content-Type', 'application/rss+xml; charset=utf-8');
     }
 
-    private function resolveStoragePageUids(): array
+    /**
+     * @return list<int>
+     */
+    private function resolveParentPageUids(): array
     {
-        $pages = $this->settings['pages'] ?? '';
-        if (empty($pages)) {
+        $pages = trim((string) ($this->settings['pages'] ?? ''));
+        if ($pages === '') {
             return [];
         }
 
-        return array_filter(
-            array_map('intval', explode(',', (string) $pages)),
+        return array_values(array_filter(
+            array_map(static fn(string $uid): int => (int) $uid, explode(',', $pages)),
             static fn(int $uid): bool => $uid > 0,
-        );
+        ));
     }
 }

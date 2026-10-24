@@ -8,12 +8,12 @@
         <f:for each="{news}" as="newsItem">
             <item>
                 <title>{newsItem.title}</title>
-                <link><f:uri.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" absolute="1"/></link>
+                <link><f:uri.page pageUid="{newsItem.uid}" absolute="1"/></link>
                 <description>{newsItem.teaser -> f:format.stripTags()}</description>
                 <f:if condition="{newsItem.date}">
                     <pubDate><f:format.date date="{newsItem.date}" format="r"/></pubDate>
                 </f:if>
-                <guid isPermaLink="true"><f:uri.action action="detail" arguments="{news: newsItem}" pageUid="{settings.detailPid}" absolute="1"/></guid>
+                <guid isPermaLink="true"><f:uri.page pageUid="{newsItem.uid}" absolute="1"/></guid>
             </item>
         </f:for>
     </channel>

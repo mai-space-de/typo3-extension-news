@@ -17,7 +17,8 @@ $lang = Helper::localLangHelperFactory('mai_news', 'Default/locallang_tca.xlf');
 return (new Table($lang('table.tx_mainews_news')))
     ->setDefaultConfig()
     ->setLabel('title')
-    ->setIconFile('EXT:mai_base/Resources/Public/Icons/generic_table.svg')
+    ->setIconFile('EXT:mai_base/Resources/Public/Icons/all-icons/interface-content-book-open--content-books-book-open--Streamline-Core.svg')
+
     ->setDefaultSorting('ORDER BY date DESC')
     ->setThumbnailField('images')
     ->addColumn(
