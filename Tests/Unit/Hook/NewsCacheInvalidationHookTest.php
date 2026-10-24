@@ -40,21 +40,6 @@ final class NewsCacheInvalidationHookTest extends TestCase
     }
 
     #[Test]
-    public function legacyNewsRecordUpdateStillFlushesCache(): void
-    {
-        $this->cacheService->expects(self::once())->method('clearCacheForRecord')->with('tx_mainews_news', 42);
-        $this->cacheService->expects(self::once())->method('clearCachesOfRegisteredPageIds');
-
-        $this->makeHook()->processDatamap_afterDatabaseOperations(
-            'update',
-            'tx_mainews_news',
-            42,
-            ['title' => 'Updated title'],
-            $this->dataHandler,
-        );
-    }
-
-    #[Test]
     public function nonNewsPageUpdateDoesNotFlush(): void
     {
         $this->cacheService->expects(self::never())->method('clearCacheForRecord');
@@ -65,6 +50,21 @@ final class NewsCacheInvalidationHookTest extends TestCase
             'pages',
             1,
             ['title' => 'Home'],
+            $this->dataHandler,
+        );
+    }
+
+    #[Test]
+    public function legacyNewsTableUpdateDoesNotFlush(): void
+    {
+        $this->cacheService->expects(self::never())->method('clearCacheForRecord');
+        $this->cacheService->expects(self::never())->method('clearCachesOfRegisteredPageIds');
+
+        $this->makeHook()->processDatamap_afterDatabaseOperations(
+            'update',
+            'tx_mainews_news',
+            42,
+            ['title' => 'Updated title'],
             $this->dataHandler,
         );
     }

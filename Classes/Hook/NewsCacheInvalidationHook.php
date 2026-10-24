@@ -9,7 +9,7 @@ use Maispace\MaiBase\Hook\AbstractRecordCacheInvalidationHook;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 /**
- * Flushes list/RSS page cache tags when a News page (or legacy record) changes.
+ * Flushes list/RSS page cache tags when a News page changes.
  */
 final class NewsCacheInvalidationHook extends AbstractRecordCacheInvalidationHook
 {
@@ -25,17 +25,6 @@ final class NewsCacheInvalidationHook extends AbstractRecordCacheInvalidationHoo
         array $fieldArray,
         DataHandler $dataHandler,
     ): void {
-        if ($table === 'tx_mainews_news') {
-            $uid = $status === 'new'
-                ? (int) ($dataHandler->substNEWwithIDs[$id] ?? 0)
-                : (int) $id;
-            if ($uid > 0) {
-                $this->flushCachesForRecord($table, $uid);
-            }
-
-            return;
-        }
-
         if ($table !== 'pages' || !$this->isNewsPageChange($fieldArray, $dataHandler)) {
             return;
         }
@@ -50,14 +39,6 @@ final class NewsCacheInvalidationHook extends AbstractRecordCacheInvalidationHoo
         bool &$recordWasDeleted,
         DataHandler $dataHandler,
     ): void {
-        if ($table === 'tx_mainews_news') {
-            if ($id > 0) {
-                $this->flushCachesForRecord($table, $id);
-            }
-
-            return;
-        }
-
         if ($table !== 'pages') {
             return;
         }
