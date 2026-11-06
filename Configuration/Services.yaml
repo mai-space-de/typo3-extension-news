@@ -16,3 +16,21 @@ services:
     tags:
       - name: 'maispace.search.indexer'
       - name: 'maispace.search.result_formatter'
+
+  dashboard.widget.maiNewsManual:
+    class: 'ProudNerds\PnBackendManual\Widgets\ManualWidget'
+    arguments:
+      $options:
+        file: 'EXT:mai_news/Resources/Private/Manual/Manual.md'
+        numbered: true
+        contentsDepth: 2
+        printButton: true
+    tags:
+      - name: dashboard.widget
+        identifier: 'maiNewsManual'
+        groupNames: 'documentation'
+        title: 'Handbuch: News'
+        description: 'Kurze Anleitung für Meldungen, Kategorien und Schlagwörter.'
+        iconIdentifier: 'content-book'
+        height: 'medium'
+        width: 'medium'
