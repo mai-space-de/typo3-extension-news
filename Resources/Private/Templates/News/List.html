@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:mai="http://typo3.org/ns/Maispace/MaiAssets/ViewHelpers"
       xmlns:maiTurbo="http://typo3.org/ns/Maispace/MaiTurbo/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
@@ -17,7 +18,11 @@
                                         <div class="mai-news-list__card-image">
                                             <f:for each="{newsItem.images}" as="image" iteration="imageIteration">
                                                 <f:if condition="{imageIteration.isFirst}">
-                                                    <f:image image="{image}" alt="{newsItem.title}" class="mai-news-list__img"/>
+                                                    <mai:image.picture image="{image}"
+                                                                       alt="{newsItem.title}"
+                                                                       class="mai-news-list__img"
+                                                                       slot="news-card"
+                                                                       critical="false"/>
                                                 </f:if>
                                             </f:for>
                                         </div>
